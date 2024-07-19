@@ -8,15 +8,8 @@
 int createDocument(
     int fileCount, char *fileNames[], int documentCode, char *statusCodes, char *documentName
 ) {
-    char cwd[100];
-	getcwd(cwd, sizeof(cwd));
-	char gdocmDir[150];
-    sprintf(gdocmDir, "%s/.gdocm/doc", cwd);
-
-    if (mkdir(gdocmDir, 0777) != 0 && errno != EEXIST) return -1;
-
-    char docLoc[200];
-	sprintf(docLoc, "%s/%d.d", gdocmDir, documentCode);
+    char docLoc[300];
+	sprintf(docLoc, "%s/doc/%d.d", dirLoc, documentCode);
 
     int fd = creat(docLoc, 0777);
 

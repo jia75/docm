@@ -5,12 +5,17 @@
 
 #include "StrToInt.c"
 
+#include "getDirectory.c"
+
 #include "doc.c"
 #include "stat.c"
 #include "setstat.c"
 #include "rule.c"
 
+char dirLoc[256];
+
 int main(int argc, char **argv) {
+	gdocm_getDirectory(&dirLoc);
 	if (argc < 2) {
 		fprintf(stderr, "see usage with gdocm help\n");
 		return 0;

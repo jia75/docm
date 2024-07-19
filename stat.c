@@ -5,18 +5,9 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int createStatus(
-    char *statusCode, char *statusTitle
-) {
-    char cwd[100];
-	getcwd(cwd, sizeof(cwd));
-	char gdocmDir[150];
-    sprintf(gdocmDir, "%s/.gdocm/stat", cwd);
-
-    if (mkdir(gdocmDir, 0777) != 0 && errno != EEXIST) return -1;
-
+int createStatus(char *statusCode, char *statusTitle) {
     char docLoc[200];
-	sprintf(docLoc, "%s/%s.s", gdocmDir, statusCode);
+	sprintf(docLoc, "%s/stat/%s.s", gdocmDir, statusCode);
 
     int fd = creat(docLoc, 0777);
 
@@ -28,6 +19,15 @@ int createStatus(
 	close(fd);
 
     return 0;
+}
+
+int removeStatus(char *statusCode) {
+	char docLoc[200];
+	sprintf(docLoc, "%s/stat/%s.s", gdocmDir, statusCode);
+	
+	remove(docLoc);
+	
+	return 0;
 }
 
 void gdocm_stat(int argc, char *argv[]) {

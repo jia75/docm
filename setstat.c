@@ -8,14 +8,8 @@
 int gdocm_setstat(int argc, char *argv[]) {
     if (argc < 4) fprintf(stderr, "see usage with gdocm help\n");
 
-    char cwd[100];
-	getcwd(cwd, sizeof(cwd));
-	char gdocmDir[150];
-    sprintf(gdocmDir, "%s/.gdocm/doc", cwd);
-    if (mkdir(gdocmDir, 0777) != 0 && errno != EEXIST) return -1;
-
     char docLoc[200];
-	sprintf(docLoc, "%s/%s.d", gdocmDir, argv[2]);
+	sprintf(docLoc, "%s/doc/%s.d", dirLoc, argv[2]);
     int fd = open(docLoc, O_RDWR);
     if (fd < 0) return -1;	
 	
