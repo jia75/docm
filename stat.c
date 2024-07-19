@@ -4,6 +4,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <dirent.h>
 
 int statExists(char *statCode, char *dirLoc) {
 	char docLoc[200];
@@ -48,29 +49,37 @@ int removeStatus(char *statusCode, char *dirLoc) {
 
 //code adapted from https://stackoverflow.com/questions/13554150/implementing-the-ls-al-command-in-c
 int listStatuses(char *dirLoc) {
-	char docDir[250];
+	char statDir[150];
 
-	strcpy(docDir, dirLoc);
-	strcat(docDir, "/doc");
+	strcpy(statDir, dirLoc);
+	strcat(statDir, "/stat");
 
 	DIR *mydir;
     struct dirent *myfile;
     struct stat mystat;
 
-    mydir = opendir(docDir);
+    mydir = opendir(statDir);
 
-	char currentFileLocation[300];
-	char fullName[200]
+	char currentFileLocation[500];
+	char fullName[200];
 
     while((myfile = readdir(mydir)) != NULL)
     {
+
+        memset(fullName,0,strlen(fullName));
+
         stat(myfile->d_name, &mystat);
 
-		sprintf(fullName, "%s/%s", docDir, myfile->d_name);
-		int fd = open(docLoc, O_RDWR);
+		sprintf(currentFileLocation, "%s/%s", statDir, myfile->d_name);
+		int fd = open(currentFileLocation, O_RDWR);
 		if (fd < 0 && errno != ENOENT && errno != EISDIR) return -1;
 		read(fd, fullName, 200);
 		close(fd);
+        strcat(fullName, "\0");
+        if (!strcmp(myfile->d_name, ".")) continue;
+        if (!strcmp(myfile->d_name, "..")) continue;
+
+        myfile->d_name[strlen(myfile->d_name) - 2] = '\0';
 
 		printf("%s (%s)\n", myfile->d_name, fullName);
     }
