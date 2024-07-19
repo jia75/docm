@@ -8,7 +8,12 @@
 int createStatus(char *statusCode, char *statusTitle) {
     char docLoc[200];
 	sprintf(docLoc, "%s/stat/%s.s", gdocmDir, statusCode);
-
+	
+	if (access(docLoc, F_OK) == 0) {
+		errno = EEXISTS;
+		return -1;
+	}
+	
     int fd = creat(docLoc, 0777);
 
     if (fd < 0) return -1;
@@ -37,8 +42,15 @@ void gdocm_stat(int argc, char *argv[]) {
 
     while (argc - currentArg > 0) {
         if (!strcmp(argv[currentArg], "-a") && argc - currentArg > 2) {
-            if (createStatus(argv[currentArg + 1], argv[currentArg + 2]) < 0)
-                fprintf(stderr, "error with creation\n");
+            if (createStatus(argv[currentArg + 1], argv[currentArg + 2]) < 0) {
+				if (errno == EEXISTS) {
+					fprintf(stderr, "status %s already exists\n", argv[currentArg + 1]);
+				} else {
+					fprintf(stderr, "error with creation\n");
+				}
+				continue;
+			}
+			
             fprintf(
                 stdout,
                 "created status \"%s\" (code: \"%s\")\n",
