@@ -62,6 +62,10 @@ void gdocm_doc(int argc, char *argv[]) {
     while (argc - currentArg > 0) {
         if (!strcmp(argv[currentArg], "-c") && argc - currentArg > 2) {
             docCode = StrToInt(argv[currentArg + 1]);
+            if (docCode < 0) {
+                fprintf(stderr, "error: invalid input for -c\n");
+                return -1;
+            }
             currentArg += 2;
             continue;
         }
