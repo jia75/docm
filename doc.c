@@ -19,13 +19,12 @@ int createDocument(
 	sprintf(docLoc, "%s/%d.d", gdocmDir, documentCode);
 
     int fd = creat(docLoc, 0777);
-    //fd = open(gdocmDir, O_CREAT|O_APPEND, 0777);
 
-    if (fd < 0) return errno;
+    if (fd < 0) return -1;
 
-    char buffer [1024];
+    char buffer[1024];
 	sprintf(buffer, "%s\n%s\n%s", statusCodes, documentName, fileNames[0]);
-    write(fd, buffer, strlen(buffer) - 1);
+    write(fd, buffer, strlen(buffer));
 	close(fd);
     //placeholder for when auto naming is added
     strcpy(documentName, documentName);
@@ -33,7 +32,7 @@ int createDocument(
     return documentCode;
 }
 
-void doc(int argc, char *argv[]) {
+void gdocm_doc(int argc, char *argv[]) {
     if (argc < 3) fprintf(stderr, "see usage with gdocm help\n");
     //options
     int currentArg = 2;

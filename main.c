@@ -16,17 +16,19 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 	if (!strcmp(argv[1], "doc")) {
-        doc(argc, argv);
+        gdocm_doc(argc, argv);
         return 0;
 	}
 	if (!strcmp(argv[1], "help")) {
 
 	}
 	if (!strcmp(argv[1], "setstat")) {
-
+        gdocm_setstat(argc, argv);
+        return 0;
 	}
 	if (!strcmp(argv[1], "stat")) {
-
+        gdocm_stat(argc, argv);
+        return 0;
 	}
 	if (!strcmp(argv[1], "init")) {
 		char cwd[100];
@@ -40,6 +42,6 @@ int main(int argc, char **argv) {
 	if (!strcmp(argv[1], "rule")) {
 
 	}
-	fprintf(stderr, "command not found\nsee usage with gdocm help\n");
+	fprintf(stderr, "gdocm command not found\nsee usage with gdocm help\n");
 	return 0;
 }
