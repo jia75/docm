@@ -29,9 +29,16 @@ int createDocument(
     if (fd < 0) return -1;
 
     char buffer[1024];
-	sprintf(buffer, "%s\n%s\n%s", statusCodes, documentName, fileNames[0]);
+	sprintf(buffer, "%s\n%s", statusCodes, documentName);
+    
+    for (int i = 0; i < fileCount; ++i) {
+        strcat(buffer, "\n");
+        strcat(buffer, fileNames[i]);
+    }
+    
     write(fd, buffer, strlen(buffer));
 	close(fd);
+    
     //placeholder for when auto naming is added
     strcpy(documentName, documentName);
 
