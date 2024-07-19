@@ -5,10 +5,10 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int docExists(int docCode) {
+int docExists(int docCode, char *dirLoc) {
 	char docLoc[200];
 	sprintf(docLoc, "%s/doc/%d.d", dirLoc, docCode);
-	
+
 	if (access(docLoc, F_OK) == 0) {
 		return 1;
 	} else {
@@ -17,10 +17,12 @@ int docExists(int docCode) {
 }
 
 int createDocument(
-    int fileCount, char *fileNames[], int documentCode, char *statusCodes, char *documentName
+    int fileCount, char *fileNames[], int documentCode, char *statusCodes, char *documentName,
+    char *dirLoc
 ) {
     char docLoc[300];
 	sprintf(docLoc, "%s/doc/%d.d", dirLoc, documentCode);
+    fprintf(stderr, "doc case\n");
 
     int fd = creat(docLoc, 0777);
 
@@ -36,7 +38,7 @@ int createDocument(
     return documentCode;
 }
 
-void gdocm_doc(int argc, char *argv[]) {
+void gdocm_doc(int argc, char *argv[], char *dirLoc) {
     if (argc < 3) fprintf(stderr, "see usage with gdocm help\n");
     //options
     int currentArg = 2;
@@ -71,8 +73,9 @@ void gdocm_doc(int argc, char *argv[]) {
         }
         break;
     }
+        fprintf(stderr, "pre creat doc case\n");
     docCode = createDocument(
-        argc - currentArg, &argv[currentArg], docCode, docStatus, docName
+        argc - currentArg, &argv[currentArg], docCode, docStatus, docName, dirLoc
     );
     fprintf(stdout, "created document \"%s\" assigned code d%d\n", docName, docCode);
 }
