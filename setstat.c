@@ -27,4 +27,6 @@ int gdocm_setstat(int argc, char *argv[]) {
     if (fd < 0) return -1;
 	write(fd, buffer, strlen(buffer));
 	close(fd);
+	
+	fprintf(stdout, "assigned status %s to document d%d\n", argv[3], argv[2]);
 }
