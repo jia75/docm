@@ -22,7 +22,6 @@ int createDocument(
 ) {
     char docLoc[300];
 	sprintf(docLoc, "%s/doc/%d.d", dirLoc, documentCode);
-    fprintf(stderr, "doc case\n");
 
     int fd = creat(docLoc, 0777);
 
@@ -30,15 +29,15 @@ int createDocument(
 
     char buffer[1024];
 	sprintf(buffer, "%s\n%s", statusCodes, documentName);
-    
+
     for (int i = 0; i < fileCount; ++i) {
         strcat(buffer, "\n");
         strcat(buffer, fileNames[i]);
     }
-    
+
     write(fd, buffer, strlen(buffer));
 	close(fd);
-    
+
     //placeholder for when auto naming is added
     strcpy(documentName, documentName);
 
@@ -80,7 +79,6 @@ void gdocm_doc(int argc, char *argv[], char *dirLoc) {
         }
         break;
     }
-        fprintf(stderr, "pre creat doc case\n");
     docCode = createDocument(
         argc - currentArg, &argv[currentArg], docCode, docStatus, docName, dirLoc
     );

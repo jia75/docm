@@ -24,7 +24,6 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 	if (!strcmp(argv[1], "doc")) {
-        fprintf(stderr, "doc case\n");
         gdocm_doc(argc, argv, dirLoc);
         return 0;
 	}
