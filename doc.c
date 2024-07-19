@@ -5,6 +5,17 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+int docExists(int docCode) {
+	char docLoc[200];
+	sprintf(docLoc, "%s/doc/%d.d", dirLoc, docCode);
+	
+	if (access(docLoc, F_OK) == 0) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 int createDocument(
     int fileCount, char *fileNames[], int documentCode, char *statusCodes, char *documentName
 ) {

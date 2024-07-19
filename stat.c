@@ -5,11 +5,22 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int createStatus(char *statusCode, char *statusTitle) {
-    char docLoc[200];
-	sprintf(docLoc, "%s/stat/%s.s", gdocmDir, statusCode);
+int statExists(char statCode) {
+	char docLoc[200];
+	sprintf(docLoc, "%s/stat/%s.", dirLoc, statCode);
 	
 	if (access(docLoc, F_OK) == 0) {
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
+int createStatus(char *statusCode, char *statusTitle) {
+    char docLoc[200];
+	sprintf(docLoc, "%s/stat/%s.s", dirLoc, statusCode);
+	
+	if (statExists(statusCode)) {
 		errno = EEXISTS;
 		return -1;
 	}
@@ -28,7 +39,7 @@ int createStatus(char *statusCode, char *statusTitle) {
 
 int removeStatus(char *statusCode) {
 	char docLoc[200];
-	sprintf(docLoc, "%s/stat/%s.s", gdocmDir, statusCode);
+	sprintf(docLoc, "%s/stat/%s.s", dirLoc, statusCode);
 	
 	remove(docLoc);
 	

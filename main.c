@@ -41,10 +41,9 @@ int main(int argc, char **argv) {
 		}
 		char cwd[100];
 		getcwd(cwd, sizeof(cwd));
-		char gdocmDir[150];
-		sprintf(gdocmDir, "%s/.gdocm", cwd);
-		mkdir(gdocmDir, 0777);
-		fprintf(stdout, "initialized gdocm context at %s\n", gdocmDir);
+		sprintf(dirLoc, "%s/.gdocm", cwd);
+		mkdir(dirLoc, 0777);
+		fprintf(stdout, "initialized gdocm context at %s\n", dirLoc);
 		return 0;
 	}
 	if (!strcmp(argv[1], "rule")) {

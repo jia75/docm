@@ -8,10 +8,21 @@
 int gdocm_setstat(int argc, char *argv[]) {
     if (argc < 4) fprintf(stderr, "see usage with gdocm help\n");
 
+	if (!statExists(statusCode)) {
+		errno = ENOENT;
+		fprintf(stderr, "error: status does not exist\n");
+		return -1;
+	}
+	
     char docLoc[200];
 	sprintf(docLoc, "%s/doc/%s.d", dirLoc, argv[2]);
     int fd = open(docLoc, O_RDWR);
-    if (fd < 0) return -1;	
+    if (fd < 0) {
+		if (errno == ENOENT) {
+			fprintf(stderr, "error: document does not exist\n");			
+		}
+		return -1;	
+	}
 	
 	char[512] buffer;
 	int currentLength;
@@ -29,4 +40,5 @@ int gdocm_setstat(int argc, char *argv[]) {
 	close(fd);
 	
 	fprintf(stdout, "assigned status %s to document d%d\n", argv[3], argv[2]);
+	return 0;
 }
