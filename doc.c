@@ -19,6 +19,13 @@ int docExists(int docCode) {
 int createDocument(
     int fileCount, char *fileNames[], int documentCode, char *statusCodes, char *documentName
 ) {
+    char **statuses;
+    int statusesLength = splitStatusCodes(statuses, statusCodes);
+    
+    for (int i = 0; i < statusesLength; ++i) {
+        if (!statExists(statuses[i])) return -1;
+    }
+    
     char docLoc[300];
 	sprintf(docLoc, "%s/doc/%d.d", dirLoc, documentCode);
 
