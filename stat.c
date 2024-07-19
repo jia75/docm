@@ -41,6 +41,15 @@ int splitStatusCodes(char **dest, char *statusCode) {
 }
 
 int createStatus(char *statusCode, char *statusTitle) {
+    if (statusCode[0] <= 'z' && statusCode[0] >= 'a') {
+        statusCode[0] += 'A' - 'a';
+    }
+    for (int i = 1; statusCode[i] != '\0'; ++i) {
+        if (statusCode[0] <= 'Z' && statusCode[0] >= 'A') {
+            statusCode[0] += 'a' - 'A';
+        }
+    }
+    
     char docLoc[200];
 	sprintf(docLoc, "%s/stat/%s.s", dirLoc, statusCode);
 	
