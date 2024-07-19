@@ -17,7 +17,39 @@ int statExists(char *statCode, char *dirLoc) {
 	}
 }
 
+/* takes a string of characters `statusCode` and splits it into substrings,
+
+like this:
+HHRtRtueLLEaeuE -> {H, H, Rt, Rtue, L, L, Eaeu, E}
+
+returns length of array */
+int splitStatusCodes(char **dest, char *statusCode) {
+    dest = malloc(strlen(statusCode)*sizeof(char*));
+    char buffer[16] = "";
+    int currentCodeLength = 0;
+    int destPtr = 0;
+    for (int i = 0; statusCode[i] != '\0') {
+        if (statusCode[i] >= 'A' && statusCode[i] <= 'Z' && !strcmp(buffer, "")) {
+            buffer[currentCodeLength] = '\0';
+            dest[destPtr] = malloc(strlen(buffer) * sizeof(char));
+            strcpy(dest[destPtr], buffer);
+            strcpy(buffer, "");
+        }
+        buffer[currentCodeLength] = statusCode[i];
+        ++currentCodeLength;
+    }
+    list[0] = malloc()
+}
+
 int createStatus(char *statusCode, char *statusTitle, char *dirLoc) {
+    if (statusCode[0] <= 'z' && statusCode[0] >= 'a') {
+        statusCode[0] += 'A' - 'a';
+    }
+    for (int i = 1; statusCode[i] != '\0'; ++i) {
+        if (statusCode[0] <= 'Z' && statusCode[0] >= 'A') {
+            statusCode[0] += 'a' - 'A';
+        }
+    }
     char docLoc[200];
 	sprintf(docLoc, "%s/stat/%s.s", dirLoc, statusCode);
 
