@@ -46,6 +46,38 @@ int removeStatus(char *statusCode, char *dirLoc) {
 	return 0;
 }
 
+//code adapted from https://stackoverflow.com/questions/13554150/implementing-the-ls-al-command-in-c
+int listStatuses(char *dirLoc) {
+	char docDir[250];
+
+	strcpy(docDir, dirLoc);
+	strcat(docDir, "/doc");
+
+	DIR *mydir;
+    struct dirent *myfile;
+    struct stat mystat;
+
+    mydir = opendir(docDir);
+
+	char currentFileLocation[300];
+	char fullName[200]
+
+    while((myfile = readdir(mydir)) != NULL)
+    {
+        stat(myfile->d_name, &mystat);
+
+		sprintf(fullName, "%s/%s", docDir, myfile->d_name);
+		int fd = open(docLoc, O_RDWR);
+		if (fd < 0 && errno != ENOENT && errno != EISDIR) return -1;
+		read(fd, fullName, 200);
+		close(fd);
+
+		printf("%s (%s)\n", myfile->d_name, fullName);
+    }
+
+    closedir(mydir);
+}
+
 void gdocm_stat(int argc, char *argv[], char *dirLoc) {
     if (argc < 3) fprintf(stderr, "see usage with gdocm help\n");
     //options
@@ -82,7 +114,7 @@ void gdocm_stat(int argc, char *argv[], char *dirLoc) {
             continue;
         }
         if (!strcmp(argv[currentArg], "-l") && argc - currentArg > 0) {
-            //:
+            listStatuses(dirLoc);
             currentArg += 1;
             continue;
         }
