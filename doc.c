@@ -19,6 +19,10 @@ int docExists(int docCode) {
 int createDocument(
     int fileCount, char *fileNames[], int documentCode, char *statusCodes, char *documentName
 ) {
+    if (documentCode < 0) {
+        return -1;
+    }
+    
     char **statuses;
     int statusesLength = splitStatusCodes(statuses, statusCodes);
     
