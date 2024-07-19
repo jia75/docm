@@ -48,7 +48,7 @@ void gdocm_stat(int argc, char *argv[]) {
             continue;
         }
         if (!strcmp(argv[currentArg], "-r") && argc - currentArg > 1) {
-            //removeStatus(argv[currentArg + 1]);
+            removeStatus(argv[currentArg + 1]);
             currentArg += 2;
             continue;
         }

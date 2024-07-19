@@ -36,6 +36,9 @@ int main(int argc, char **argv) {
         return 0;
 	}
 	if (!strcmp(argv[1], "init")) {
+		if (!strcmp(dirLocation, "")) {
+			fprintf(stderr, "gdocm context already exists somewhere on this or its parent directory\n");
+		}
 		char cwd[100];
 		getcwd(cwd, sizeof(cwd));
 		char gdocmDir[150];
