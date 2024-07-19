@@ -43,10 +43,20 @@ int listStatuses() {
 	
     mydir = opendir(docDir);
 	
+	char currentFileLocation[300];
+	char fullName[200]
+	
     while((myfile = readdir(mydir)) != NULL)
-    {
+    {	
         stat(myfile->d_name, &mystat);    
-        printf("%s\n", myfile->d_name);
+        
+		sprintf(fullName, "%s/%s", docDir, myfile->d_name);
+		int fd = open(docLoc, O_RDWR);
+		if (fd < 0 && errno != ENOENT && errno != EISDIR) return -1;
+		read(fd, fullName, 200);
+		close(fd);
+		
+		printf("%s (%s)\n", myfile->d_name, fullName);
     }
 	
     closedir(mydir);
