@@ -28,7 +28,7 @@ int splitStatusCodes(char **dest, char *statusCode) {
     char buffer[16] = "";
     int currentCodeLength = 0;
     int destPtr = 0;
-    for (int i = 0; statusCode[i] != '\0') {
+    for (int i = 0; statusCode[i] != '\0'; ++i) {
         if (statusCode[i] >= 'A' && statusCode[i] <= 'Z' && !strcmp(buffer, "")) {
             buffer[currentCodeLength] = '\0';
             dest[destPtr] = malloc(strlen(buffer) * sizeof(char));
@@ -38,7 +38,7 @@ int splitStatusCodes(char **dest, char *statusCode) {
         buffer[currentCodeLength] = statusCode[i];
         ++currentCodeLength;
     }
-    list[0] = malloc()
+    return 0;
 }
 
 int createStatus(char *statusCode, char *statusTitle, char *dirLoc) {
@@ -46,8 +46,8 @@ int createStatus(char *statusCode, char *statusTitle, char *dirLoc) {
         statusCode[0] += 'A' - 'a';
     }
     for (int i = 1; statusCode[i] != '\0'; ++i) {
-        if (statusCode[0] <= 'Z' && statusCode[0] >= 'A') {
-            statusCode[0] += 'a' - 'A';
+        if (statusCode[i] <= 'Z' && statusCode[i] >= 'A') {
+            statusCode[i] += 'a' - 'A';
         }
     }
     char docLoc[200];

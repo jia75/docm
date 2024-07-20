@@ -23,14 +23,14 @@ int createDocument(
     if (documentCode < 0) {
         return -1;
     }
-    
+
     char **statuses;
     int statusesLength = splitStatusCodes(statuses, statusCodes);
-    
+
     for (int i = 0; i < statusesLength; ++i) {
-        if (!statExists(statuses[i])) return -1;
+        if (!statExists(statuses[i], dirLoc)) return -1;
     }
-    
+
     char docLoc[300];
 	sprintf(docLoc, "%s/doc/%d.d", dirLoc, documentCode);
 
@@ -72,7 +72,7 @@ void gdocm_doc(int argc, char *argv[], char *dirLoc) {
             docCode = StrToInt(argv[currentArg + 1]);
             if (docCode < 0) {
                 fprintf(stderr, "error: invalid input for -c\n");
-                return -1;
+                return;
             }
             currentArg += 2;
             continue;

@@ -11,8 +11,8 @@
 
 #include "getDirectory.c"
 
-#include "doc.c"
 #include "stat.c"
+#include "doc.c"
 #include "setstat.c"
 #include "rule.c"
 
