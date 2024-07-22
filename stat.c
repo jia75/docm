@@ -61,7 +61,7 @@ int removeStatus(char *statusCode, char *dirLoc) {
 
 	//remove from index
 	strcat(statusCode, "\n");
-	removeFirstMatch(docLoc, statusCode);
+	fileRemoveFirstMatch(docLoc, statusCode);
 	return 0;
 }
 
