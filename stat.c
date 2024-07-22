@@ -6,6 +6,8 @@
 #include <fcntl.h>
 #include <dirent.h>
 
+#include "removeFirstMatch.c"
+
 int statExists(char *statCode, char *dirLoc) {
 	char docLoc[200];
 	sprintf(docLoc, "%s/stat/%s.s", dirLoc, statCode);
@@ -18,77 +20,68 @@ int statExists(char *statCode, char *dirLoc) {
 }
 
 int createStatus(char *statusCode, char *statusTitle, char *dirLoc) {
-    char docLoc[200];
+    //set path
+	char docLoc[200];
 	sprintf(docLoc, "%s/stat/%s.s", dirLoc, statusCode);
 
+	//check if status already exists
 	if (statExists(statusCode, dirLoc)) {
 		errno = EEXIST;
 		return -1;
 	}
-
+	
+	//create and define status
     int fd = creat(docLoc, 0777);
-
     if (fd < 0) return -1;
-
     char buffer [1024];
 	sprintf(buffer, "%s", statusTitle);
     write(fd, buffer, strlen(buffer));
 	close(fd);
-
+	
+	//add status to index	
+	sprintf(docLoc, "%s/statindex", dirLoc);
+	fd = open(docLoc, O_APPEND);
+	if (fd < 0) return -1;
+	write(fd, statusCode, strlen(statusCode));
+	write(fd, "\n", 1);
+	
     return 0;
 }
 
 int removeStatus(char *statusCode, char *dirLoc) {
+	//check if exists
+	if (!statExists(statusCode, dirLoc)) return -1;
+	
+	//set path
 	char docLoc[200];
 	sprintf(docLoc, "%s/stat/%s.s", dirLoc, statusCode);
-
+	
+	//remove file
 	remove(docLoc);
 
+	//remove from index
+	strcat(statusCode, "\n");
+	removeFirstMatch(docLoc, statusCode);
 	return 0;
 }
 
 //code adapted from https://stackoverflow.com/questions/13554150/implementing-the-ls-al-command-in-c
 int listStatuses(char *dirLoc) {
-	char statDir[150];
-
-	strcpy(statDir, dirLoc);
-	strcat(statDir, "/stat");
-
-	DIR *mydir;
-    struct dirent *myfile;
-    struct stat mystat;
-
-    mydir = opendir(statDir);
-
-	char currentFileLocation[500];
-	char fullName[200];
-
-    while((myfile = readdir(mydir)) != NULL)
-    {
-
-        memset(fullName,0,strlen(fullName));
-
-        stat(myfile->d_name, &mystat);
-
-		sprintf(currentFileLocation, "%s/%s", statDir, myfile->d_name);
-		int fd = open(currentFileLocation, O_RDWR);
-		if (fd < 0 && errno != ENOENT && errno != EISDIR) return -1;
-		read(fd, fullName, 200);
-		close(fd);
-        strcat(fullName, "\0");
-        if (!strcmp(myfile->d_name, ".")) continue;
-        if (!strcmp(myfile->d_name, "..")) continue;
-
-        myfile->d_name[strlen(myfile->d_name) - 2] = '\0';
-
-		printf("%s (%s)\n", myfile->d_name, fullName);
-    }
-
-    closedir(mydir);
+	char pathToStatIndex[200];
+	strcpy(pathToStatIndex, dirLoc);
+	strcat(pathToStatIndex, "/statindex")
+	int fd = open(pathToStatIndex, O_RDWR);
+	if (fd < 0) return -1;
+	char buffer[1024];
+	while (read(fd, buffer, 1024) > 0) {
+		fprintf(stdout, "%s", buffer);
+	}
+	close(fd);
+	return 0;
 }
 
-void gdocm_stat(int argc, char *argv[], char *dirLoc) {
-    if (argc < 3) fprintf(stderr, "see usage with gdocm help\n");
+void docm_stat(int argc, char *argv[], char *dirLoc) {
+    if (argc < 3) fprintf(stderr, "see usage with docm help\n");
     //options
     int currentArg = 2;
 

@@ -5,8 +5,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-int gdocm_setstat(int argc, char *argv[], char *dirLoc) {
-    if (argc < 4) fprintf(stderr, "see usage with gdocm help\n");
+int docm_setstat(int argc, char *argv[], char *dirLoc) {
+    if (argc < 4) fprintf(stderr, "see usage with docm help\n");
 
 	if (!statExists(argv[3], dirLoc)) {
 		errno = ENOENT;

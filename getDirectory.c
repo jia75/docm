@@ -2,7 +2,7 @@
 
 #include "scountc.c"
 
-char *gdocm_getDirectory() {
+char *docm_getDirectory() {
     char *dest;
 	char cwd[200];
 	getcwd(cwd, 100);
@@ -16,7 +16,7 @@ char *gdocm_getDirectory() {
 	int initialDepth = scountc(cwd, '/');
 	while (i < initialDepth) {
 		strcpy(buffer, cwd);
-		strcat(buffer, "/.gdocm");
+		strcat(buffer, "/.docm");
 		if (stat(buffer, &sb) == 0 && S_ISDIR(sb.st_mode)) {
 			dest = malloc(strlen(buffer) + 2);
             strcpy(dest, buffer);

@@ -44,8 +44,8 @@ int createDocument(
     return documentCode;
 }
 
-void gdocm_doc(int argc, char *argv[], char *dirLoc) {
-    if (argc < 3) fprintf(stderr, "see usage with gdocm help\n");
+void docm_doc(int argc, char *argv[], char *dirLoc) {
+    if (argc < 3) fprintf(stderr, "see usage with docm help\n");
     //options
     int currentArg = 2;
 

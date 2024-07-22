@@ -17,41 +17,54 @@
 #include "rule.c"
 
 int main(int argc, char **argv) {
-    char *dirLoc = gdocm_getDirectory();
+    char *dirLoc = docm_getDirectory();
 
 	if (argc < 2) {
-		fprintf(stderr, "see usage with gdocm help\n");
+		fprintf(stderr, "see usage with docm help\n");
 		return 0;
 	}
 	if (!strcmp(argv[1], "doc")) {
-        gdocm_doc(argc, argv, dirLoc);
+        docm_doc(argc, argv, dirLoc);
         return 0;
 	}
 	if (!strcmp(argv[1], "help")) {
 
 	}
 	if (!strcmp(argv[1], "setstat")) {
-        gdocm_setstat(argc, argv, dirLoc);
+        docm_setstat(argc, argv, dirLoc);
         return 0;
 	}
 	if (!strcmp(argv[1], "stat")) {
-        gdocm_stat(argc, argv, dirLoc);
+        docm_stat(argc, argv, dirLoc);
         return 0;
 	}
 	if (!strcmp(argv[1], "init")) {
 		if (strcmp(dirLoc, "")) {
-			fprintf(stderr, "gdocm context already exists somewhere on this or its parent directory\n");
+			fprintf(stderr, "docm context already exists somewhere on this or its parent directory\n");
 		}
 		char cwd[100];
 		getcwd(cwd, sizeof(cwd));
-		sprintf(dirLoc, "%s/.gdocm", cwd);
+		sprintf(dirLoc, "%s/.docm", cwd);
 		mkdir(dirLoc, 0777);
-		fprintf(stdout, "initialized gdocm context at %s\n", dirLoc);
+		
+		char docLoc[200];
+		
+		strcpy(docLoc, dirLoc);
+		strcat(docLoc, "/statindex");
+		int fd = creat(docLoc, 0777);
+		close(fd);
+		
+		strcpy(docLoc, dirLoc);
+		strcat(docLoc, "/docindex");
+		fd = creat(docLoc, 0777);
+		close(fd);
+		
+		fprintf(stdout, "initialized docm context at %s\n", dirLoc);
 		return 0;
 	}
 	if (!strcmp(argv[1], "rule")) {
 
 	}
-	fprintf(stderr, "gdocm command not found\nsee usage with gdocm help\n");
+	fprintf(stderr, "docm command not found\nsee usage with docm help\n");
 	return 0;
 }
