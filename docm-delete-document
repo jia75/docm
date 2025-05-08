@@ -1,2 +1,3 @@
 #!/bin/sh
-sed -i "/^$1$/d" .docm/documentlist 
+sed -i "/^$1$/d" .docm/documentlist
+rm .docm/docs/$1

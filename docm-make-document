@@ -2,13 +2,15 @@
 
 # check if document already exists
 
-if grep -q "^$1$" .docm/documentlist
+if docm-document-exists $1
 then
     echo "docm: fatal: document \"$1\" already exists" >&2
     return 1
 fi
 
-touch .docm/$1
+touch .docm/docs/$1
+
+echo "title=$1" >> .docm/docs/$1
 
 echo "$1" >> .docm/documentlist
 sort -o .docm/documentlist .docm/documentlist

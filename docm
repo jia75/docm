@@ -16,7 +16,7 @@ then
 
     # Check if valid context (or creating one)
 
-    if [ "$cmd" = "make-context" ]
+    if [ "$cmd" = "make-context" ] || [ "$cmd" = "help" ]
     then
         exec "./docm-$cmd" "$@"
     else
