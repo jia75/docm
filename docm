@@ -1,11 +1,36 @@
 #!/bin/sh
 cmd="$1"
+
+# Check if argument is given
+
+if [ "$cmd" = "" ]
+then
+    echo "docm: fatal: no arguments given" >&2
+    return 1
+fi
+
 shift
 
 if [ -e docm-$cmd ]
 then
-    exec "./docm-$cmd" "$@"
+
+    # Check if valid context (or creating one)
+
+    if [ "$cmd" = "make-context" ]
+    then
+        exec "./docm-$cmd" "$@"
+    else
+        if ./docm-is-in-context
+        then
+            exec "./docm-$cmd" "$@"
+        else
+            echo "docm: fatal: docm context not found (create with docm make-context)" >&2
+            return 1
+        fi
+    fi
+
 else
     echo "docm: fatal: function \"$cmd\" not found" >&2
+    return 1
 fi
 
