@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# usage: docm-rm-attribute <document-name> <attribute-name> [<attribute-content>]
+
+if [ "$#" -lt "2" ]
+then
+    echo "docm: fatal: not enough arguments (2 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if [ "$#" = "2" ]
+then
+    sed "/^$2=/d" .docm/$1 > .docm/$1
+else
+    echo "docm: info: deleting line $2=$3" >&2
+    sed -i '' "/^$2=$3$/d" .docm/$1
+fi

@@ -6,7 +6,7 @@ cmd="$1"
 if [ "$cmd" = "" ]
 then
     echo "docm: fatal: no arguments given" >&2
-    return 1
+    exit 1
 fi
 
 shift
@@ -25,12 +25,12 @@ then
             exec "./docm-$cmd" "$@"
         else
             echo "docm: fatal: docm context not found (create with docm make-context)" >&2
-            return 1
+            exit 1
         fi
     fi
 
 else
     echo "docm: fatal: function \"$cmd\" not found" >&2
-    return 1
+    exit 1
 fi
 

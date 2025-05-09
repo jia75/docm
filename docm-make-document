@@ -1,11 +1,17 @@
 #!/bin/sh
 
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
 # check if document already exists
 
 if grep -q "^$1$" .docm/documentlist
 then
     echo "docm: fatal: document \"$1\" already exists" >&2
-    return 1
+    exit 1
 fi
 
 touch .docm/$1
