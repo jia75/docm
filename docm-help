@@ -1,7 +1,10 @@
 #!/bin/sh
 echo "# Docm
 
-Commands:
-- help
-- make-context
-- make-document"
+Usage:
+    docm make-context
+    docm make-document <title>
+    docm rm-document <title>
+    docm cat-document <title>
+    docm set-attribute <document> <name> <value>
+    docm rm-attribute <document> <name> [<value>]"

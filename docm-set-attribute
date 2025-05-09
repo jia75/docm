@@ -14,5 +14,5 @@ then
     exit 1
 fi
 
-echo "$2=$3" >> .docm/$1
-sort -o .docm/$1 .docm/$1
+echo "$2=$3" >> .docm/docs/$1
+sort -o .docm/docs/$1 .docm/docs/$1

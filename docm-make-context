@@ -6,4 +6,5 @@ then
 fi
 
 mkdir .docm
+mkdir .docm/docs
 touch .docm/documentlist
