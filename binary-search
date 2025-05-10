@@ -9,7 +9,6 @@ high=$(wc -l < "$file")
 while [ "$low" -le "$high" ]; do
     mid=$(( (low + high) / 2 ))
     line=$(sed -n "${mid}p" "$file")
-    echo "$line" >&2
 
     if [ "$line" == "$target" ]; then
         exit 0

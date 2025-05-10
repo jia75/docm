@@ -18,4 +18,6 @@ touch .docm/docs/$1
 echo "title=$1" >> .docm/docs/$1
 
 echo "$1" >> .docm/documentlist
-sort -o .docm/documentlist .docm/documentlist
+
+tmpfile=$(mktemp .docm/documentlist.XXXXXX) || exit 1
+sort .docm/documentlist > "$tmpfile" && mv "$tmpfile" .docm/documentlist
