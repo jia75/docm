@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
+cat .docm/docs/$1

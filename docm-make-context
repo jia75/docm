@@ -2,7 +2,7 @@
 if ./docm-is-in-context
 then
     echo "docm: fatal: context already exists" >&2
-    return 1
+    exit 1
 fi
 
 mkdir .docm

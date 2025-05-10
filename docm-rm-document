@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
+sed -i '' "/^$1$/d" .docm/documentlist
+rm .docm/docs/$1
