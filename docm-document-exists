@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if binary-search $1 .docm/documentlist
+then
+    return 0
+else
+    return 1
+fi
