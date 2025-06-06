@@ -1,0 +1,25 @@
+#!/bin/sh
+
+# Usage: docm-view-document <document-name>
+
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if ! docm-document-exists "$1"
+then
+    echo "docm: fatal: document \"$1\" does not exist" >&2
+    exit 1
+fi
+
+echo "Document: \"$1\""
+
+echo ""
+
+grep "[^=]\+-to=.\+" .docm/docs/"$1" | sed "s/^/--/g" | sed "s/-to=/-> /g"
+
+echo ""
+
+grep "[^=]\+-from=.\+" .docm/docs/"$1" | sed "s/^/<-/g" | sed "s/-from=/-- /g"

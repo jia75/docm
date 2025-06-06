@@ -12,6 +12,5 @@ if [ "$#" = "2" ]
 then
     sed -i '' "/^$2=/d" .docm/docs/"$1"
 else
-    echo "docm: info: deleting line \"$2=$3\"" >&2
     sed -i '' "/^$2=$3$/d" .docm/docs/"$1"
 fi
