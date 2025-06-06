@@ -7,4 +7,4 @@ then
 fi
 
 sed -i '' "/^$1$/d" .docm/documentlist
-rm .docm/docs/$1
+rm .docm/docs/"$1"

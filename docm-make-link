@@ -8,17 +8,17 @@ then
     exit 1
 fi
 
-if ! docm-document-exists $1
+if ! docm-document-exists "$1"
 then
     echo "docm: fatal: document \"$1\" doesn't exist" >&2
     exit 1
 fi
 
-if ! docm-document-exists $3
+if ! docm-document-exists "$3"
 then
     echo "docm: fatal: document \"$3\" doesn't exist" >&2
     exit 1
 fi
 
-docm-set-attribute $1 $2-to $3
-docm-set-attribute $3 $2-from $1
+docm-set-attribute "$1" "$2-to" "$3"
+docm-set-attribute "$3" "$2-from" "$1"

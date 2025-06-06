@@ -14,7 +14,7 @@ then
     exit 1
 fi
 
-echo "$2=$3" >> .docm/docs/$1
+echo "$2=$3" >> .docm/docs/"$1"
 
-tmpfile=$(mktemp .docm/docs/$1.XXXXXX) || exit 1
-sort .docm/docs/$1 > "$tmpfile" && mv "$tmpfile" .docm/docs/$1
+tmpfile=$(mktemp .docm/docs/"$1.XXXXXX") || exit 1
+sort .docm/docs/"$1" > "$tmpfile" && mv "$tmpfile" .docm/docs/"$1"

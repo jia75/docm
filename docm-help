@@ -7,4 +7,5 @@ Usage:
     docm rm-document <title>
     docm cat-document <title>
     docm set-attribute <document> <name> <value>
-    docm rm-attribute <document> <name> [<value>]"
+    docm rm-attribute <document> <name> [<value>]
+    docm make-link <from> <type> <to>"
