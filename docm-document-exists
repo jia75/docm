@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if binary-search $1 .docm/documentlist
+if binary-search "$1" .docm/documentlist
 then
     exit 0
 else
