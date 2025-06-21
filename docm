@@ -6,8 +6,18 @@ cmd="$1"
 if [ "$cmd" = "" ]
 then
     echo "docm: fatal: no arguments given" >&2
+    echo "For support with Docm, try 'docm help'" >&2
     exit 1
 fi
+
+while getopts ":h" option; do
+    case "$option" in
+        (h) docm-help
+            exit 0;;
+        (?) echo "docm: fatal: invalid option" >&2
+            echo "use 'docm help' for an overview of Docm" >&2;;
+    esac
+done
 
 shift
 
