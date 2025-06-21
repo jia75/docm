@@ -1,3 +1,6 @@
-Context man page
+A context is the base element of Docm. Everything that Docm does happens within
+some context.
 
-empty:(
+Commands:
+    make-context   Creates a context in the current directory
+    rm-context     Removes the current context
