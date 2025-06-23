@@ -1,12 +1,20 @@
 #!/bin/sh
 
-# Usage; doc [-r] <document_name>
+# Usage; doc [-r] [-i] <document_name>
 
 roption=0
 
-while getopts ":r" option; do
+while getopts ":r:i" option; do
     case "$option" in
         (r) roption=1;;
+        (i) for FILE in *
+            do
+                docm-make-document "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")"\
+ 2> /dev/null
+                docm-set-attribute "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")"\
+ file "$FILE"
+            done 
+            exit 0 ;;
         (?) echo "docm: fatal: invalid option" >&2
             echo "use 'docm help' for an overview of Docm" >&2;;
     esac

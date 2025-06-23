@@ -29,9 +29,9 @@ then
 
     if [ "$cmd" = "make-context" ] || [ "$cmd" = "help" ]
     then
-        exec ""$dir"/docm-$cmd" "$@"
+        exec "$dir"/docm-"$cmd" "$@"
     else
-        if ./docm-is-in-context
+        if docm-is-in-context
         then
             exec ""$dir"/docm-$cmd" "$@"
         else

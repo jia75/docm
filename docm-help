@@ -10,7 +10,7 @@ fi
 while getopts ":l" option; do
     case "$option" in
         (l) echo "Available pages:"
-            ls -1 "$dir"/docs | sed "s/.txt$//g" | sed "s/^/- /g"
+            ls -1 "$dir"/docs | sed "s/\.txt$//g" | sed "s/^/- /g"
             exit 0;;
         (?) echo "docm: fatal: invalid option" >&2
             echo "use 'docm help' for an overview of Docm" >&2;;

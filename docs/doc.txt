@@ -1,0 +1,7 @@
+'docm doc' is the monolithic command for dealing with most document-related
+tasks. Executing it without any options simply creates a document with the
+specified title.
+
+Options
+    -r  Remove the specified document
+    -i  Add all files in the current directory to the context (not recursive)
