@@ -14,12 +14,6 @@ then
     exit 1
 fi
 
-echo "Document: \"$1\""
-
-echo ""
-
+echo "$1"
 grep "[^=]\+-to=.\+" .docm/docs/"$1" | sed "s/^/--/g" | sed "s/-to=/-> /g"
-
-echo ""
-
 grep "[^=]\+-from=.\+" .docm/docs/"$1" | sed "s/^/<-/g" | sed "s/-from=/-- /g"

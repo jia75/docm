@@ -1,0 +1,16 @@
+Searching is a key feature of Docm. For this reason, Docm works with a
+specialized searching and filtering language that is used as input to the
+search command 'docm search <query>'.
+
+The search query is a string that contains comma separated terms.
+
+An example is the following:
+
+docm search ">,extends,Example Document,<,tags,Design"
+
+This query can be split into two pieces: ">,extends,Example Document" and
+"<,tags,Design". The first part says: execute the filtering command ">" with
+the two following terms as arguments (which means to select only documents that
+have an "extends" link to "Example Document"). Similarly, the second part:
+select all documents that "Design" has a "tags" link to. Overall, this query
+selects the intersection of these two sets of documents.
