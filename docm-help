@@ -1,23 +1,25 @@
 #!/bin/sh
+dir="$(dirname $0)"
 
 if [ "$#" -lt "1" ]
 then
-    cat docs/docm.txt
+    cat "$dir"/docs/docm.txt
     exit 0
 fi
 
 while getopts ":l" option; do
     case "$option" in
-        (l) ls docs
+        (l) echo "Available pages:"
+            ls -1 "$dir"/docs | sed "s/.txt$//g" | sed "s/^/- /g"
             exit 0;;
         (?) echo "docm: fatal: invalid option" >&2
             echo "use 'docm help' for an overview of Docm" >&2;;
     esac
 done
 
-if [ -e "docs/$1.txt" ]
+if [ -e "$dir"/docs/"$1".txt ]
 then
-    cat "docs/$1.txt"
+    cat "$dir"/docs/"$1".txt
 else
     echo "docm: fatal: cannot find specified help file" >&2
     echo "For a list of available pages use 'docm help -l'" >&2

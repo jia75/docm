@@ -1,10 +1,12 @@
 Docm is a graph-based organization and linking layer. You can use it to create
-systems where files (documents) are connected with eachother through named links.
+systems where files (documents) are connected with eachother through named
+links. For more help pages, you can access the index via 'docm help -l'.
 
 Here are the various commands that Docm offers:
 
 Basic commands:
     make-context   Make a new Docm context
+    help           Access the help pages
 
 Using documents:
     doc            Create and delete documents

@@ -1,5 +1,6 @@
 #!/bin/sh
 cmd="$1"
+dir="$(dirname $0)"
 
 # Check if argument is given
 
@@ -21,18 +22,18 @@ done
 
 shift
 
-if [ -e docm-$cmd ]
+if [ -e "$dir"/docm-$cmd ]
 then
 
     # Check if valid context (or creating one)
 
     if [ "$cmd" = "make-context" ] || [ "$cmd" = "help" ]
     then
-        exec "./docm-$cmd" "$@"
+        exec ""$dir"/docm-$cmd" "$@"
     else
         if ./docm-is-in-context
         then
-            exec "./docm-$cmd" "$@"
+            exec ""$dir"/docm-$cmd" "$@"
         else
             echo "docm: fatal: docm context not found (create with docm make-context)" >&2
             exit 1
@@ -40,7 +41,7 @@ then
     fi
 
 else
-    echo "docm: fatal: function \"$cmd\" not found" >&2
+    echo "docm: fatal: function '$cmd' not found" >&2
     exit 1
 fi
 
