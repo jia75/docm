@@ -1,3 +1,11 @@
 #!/bin/sh
 
-rm -rf .docm
+echo "You are about to permanently remove all data regarding this Docm context.
+Are you sure? (Y/n)"
+
+read
+
+if [ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ]
+then
+    rm -rf .docm
+fi
