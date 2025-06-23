@@ -1,0 +1,88 @@
+#!/bin/sh
+
+# Usage; docm-search <search_query>
+
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
+choices="$(cat .docm/documentlist)"
+newch=""
+
+mode="0"
+argsLeft=0
+
+arg1=""
+arg2=""
+
+tokens=$(echo "$1" | grep -o '[^,]*')
+
+while IFS= read -r i
+do
+    if [ "$mode" == 0 ]
+    then
+        case "$i" in
+            (">") mode="$i"; argsLeft=2;;
+            ("<") mode="$i"; argsLeft=2;;
+            ("=") mode="$i"; argsLeft=1;;
+            (*) echo "docm: warning: bad search query (term $i is unknown)";;
+        esac
+        continue
+    fi
+
+    case "$mode" in
+        ("=") arg1="$i"; argsLeft=0;;
+        (">") if [ $argsLeft == 2 ]
+            then
+                arg1="$i"; argsLeft=1
+            else
+                arg2="$i"; argsLeft=0
+            fi ;;
+        ("<") if [ $argsLeft == 2 ] 
+            then
+                arg1="$i"; argsLeft=1
+            else
+                arg2="$i"; argsLeft=0
+            fi ;;
+        (*) echo "docm: warning: bad search query (unknown mode $mode)";;
+    esac
+
+    if [ "$argsLeft" == 0 ]
+    then
+        case "$mode" in
+            ("=") newch="$arg1"
+                tmp1=$(mktemp)
+                tmp2=$(mktemp)
+                echo "$choices" > "$tmp1"
+                echo "$newch" > "$tmp2"
+                choices="$(comm -12 "$tmp1" "$tmp2")"
+                rm -f "$tmp1"
+                rm -f "$tmp2";;
+            (">") newch="$(grep "$arg1-from=.\+" .docm/docs/"$arg2" | sed \
+"s/$arg1-from=//g")"
+                tmp1=$(mktemp)
+                tmp2=$(mktemp)
+                echo "$choices" > "$tmp1"
+                echo "$newch" > "$tmp2"
+                choices="$(comm -12 "$tmp1" "$tmp2")"
+                rm -f "$tmp1"
+                rm -f "$tmp2";;
+            ("<") newch="$(grep "$arg1-to=.\+" .docm/docs/"$arg2" | sed \
+"s/$arg1-to=//g")"
+                tmp1=$(mktemp)
+                tmp2=$(mktemp)
+                echo "$choices" > "$tmp1"
+                echo "$newch" > "$tmp2"
+                choices="$(comm -12 "$tmp1" "$tmp2")"
+                rm -f "$tmp1"
+                rm -f "$tmp2";;
+        esac
+        mode="0"
+    fi
+done <<EOF
+$tokens
+EOF
+
+echo "$choices"
