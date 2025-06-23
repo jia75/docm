@@ -1,0 +1,30 @@
+#!/bin/sh
+
+# Usage; doc [-r] <document_name>
+
+roption=0
+
+while getopts ":r" option; do
+    case "$option" in
+        (r) roption=1;;
+        (?) echo "docm: fatal: invalid option" >&2
+            echo "use 'docm help' for an overview of Docm" >&2;;
+    esac
+done
+
+shift "$((OPTIND - 1))"
+
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if [ "$roption" == "1" ]
+then
+    docm-rm-document $1
+    echo "docm: info: removal" >&2
+    exit 0
+fi
+
+docm-make-document "$1"
