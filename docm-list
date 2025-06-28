@@ -1,10 +1,10 @@
 #!/bin/sh
 
-soption=0
+soption="0"
 
 while getopts ":s" option; do
     case "$option" in
-        (s) soption=1;;
+        (s) soption="1";;
         (?) echo "docm: fatal: invalid option" >&2
             echo "use 'docm help' for an overview of Docm" >&2;;
     esac
@@ -12,7 +12,7 @@ done
 
 cat ".docm/documentlist" | while read
 do
-    if [ soption == "1" ]
+    if [ "$soption" == "1" ]
     then
         echo "$REPLY"
     else
