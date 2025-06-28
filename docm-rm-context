@@ -8,12 +8,12 @@ fi
 
 if ! [ -d "$dir/.docm" ]
 then
-    echo "docm: fatal: in a subdirectory, execute this command at $(dirname "$(docm-get-context-dir)")"
+    echo "docm: fatal: in a subdirectory, execute this command at $(dirname "$(docm-get-context-dir)")" >&2
     exit 1
 fi
 
 echo "You are about to permanently remove all data regarding this Docm context.
-Are you sure? (Y/n)"
+Are you sure? (Y/n)" >&2
 
 read
 

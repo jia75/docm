@@ -1,20 +1,18 @@
 #!/bin/sh
 
-# Usage: doc [-r] [-i] <document_name>
+# Usage: doc [-r] [-i] [-f <filename>] <document_name>
 
 roption=0
+foption=0
+ioption=0
+farg=""
 
-while getopts ":r:i" option; do
+while getopts ":rif:" option; do
     case "$option" in
-        (r) roption=1;;
-        (i) for FILE in *
-            do
-                docm-make-document "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")"\
- 2> /dev/null
-                docm-set-attribute "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")"\
- file "$FILE"
-            done 
-            exit 0 ;;
+        (r) roption=1 ;;
+        (i) ioption=1 ;;
+        (f) foption=1
+            farg="$OPTARG" ;;
         (?) echo "docm: fatal: invalid option" >&2
             echo "use 'docm help' for an overview of Docm" >&2;;
     esac
@@ -22,16 +20,39 @@ done
 
 shift "$((OPTIND - 1))"
 
-if [ "$#" -lt "1" ]
+if ( [ "$ioption" == "0" ] || [ "$foption" == "1" ] ) && [ "$#" -lt "1" ]
 then
     echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
     exit 1
 fi
 
+
+if [ "$foption" == "1" ]
+then
+    if ! docm-document-exists "$1"
+    then
+        docm-make-document "$1"
+    fi
+
+    docm-set-attribute "$1" file "$farg"
+    exit 0
+fi
+
+if [ "$ioption" == "1" ]
+then
+    for FILE in *
+    do      
+        docm-make-document "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")" \
+2> /dev/null
+        docm-set-attribute "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")" \
+file "$FILE"
+    done
+    exit 0 
+fi
+
 if [ "$roption" == "1" ]
 then
     docm-rm-document $1
-    echo "docm: info: removal" >&2
     exit 0
 fi
 

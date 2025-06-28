@@ -5,7 +5,7 @@
 
 if ! docm-is-in-context
 then
-    echo "docm: fatal: not in a context"
+    echo "docm: fatal: not in a context" >&2
 fi
 
 dir="$PWD"
