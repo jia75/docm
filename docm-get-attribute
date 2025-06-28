@@ -6,4 +6,4 @@ then
     exit 1
 fi
 
-cat .docm/docs/"$1" | grep "$2=.\+" | sed "s/$2=//g"
+cat "$(docm-get-context-dir)"/docs/"$1" | grep "$2=.\+" | sed "s/$2=//g"

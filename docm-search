@@ -8,7 +8,7 @@ then
     exit 1
 fi
 
-choices="$(cat .docm/documentlist)"
+choices="$(cat "$(docm-get-context-dir)"/documentlist)"
 newch=""
 
 mode="0"
@@ -60,7 +60,7 @@ do
                 choices="$(comm -12 "$tmp1" "$tmp2")"
                 rm -f "$tmp1"
                 rm -f "$tmp2";;
-            (">") newch="$(grep "$arg1-from=.\+" .docm/docs/"$arg2" | sed \
+            (">") newch="$(grep "$arg1-from=.\+" "$(docm-get-context-dir)"/docs/"$arg2" | sed \
 "s/$arg1-from=//g")"
                 tmp1=$(mktemp)
                 tmp2=$(mktemp)
@@ -69,7 +69,7 @@ do
                 choices="$(comm -12 "$tmp1" "$tmp2")"
                 rm -f "$tmp1"
                 rm -f "$tmp2";;
-            ("<") newch="$(grep "$arg1-to=.\+" .docm/docs/"$arg2" | sed \
+            ("<") newch="$(grep "$arg1-to=.\+" "$(docm-get-context-dir)"/docs/"$arg2" | sed \
 "s/$arg1-to=//g")"
                 tmp1=$(mktemp)
                 tmp2=$(mktemp)

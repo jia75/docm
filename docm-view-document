@@ -15,5 +15,5 @@ then
 fi
 
 echo "$1"
-grep "[^=]\+-to=.\+" .docm/docs/"$1" | sed "s/^/--/g" | sed "s/-to=/-> /g"
-grep "[^=]\+-from=.\+" .docm/docs/"$1" | sed "s/^/<-/g" | sed "s/-from=/-- /g"
+grep "[^=]\+-to=.\+" "$(docm-get-context-dir)"/docs/"$1" | sed "s/^/--/g" | sed "s/-to=/-> /g"
+grep "[^=]\+-from=.\+" "$(docm-get-context-dir)"/docs/"$1" | sed "s/^/<-/g" | sed "s/-from=/-- /g"

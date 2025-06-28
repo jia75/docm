@@ -6,5 +6,5 @@ then
     exit 1
 fi
 
-sed -i '' "/^$1$/d" .docm/documentlist
-rm .docm/docs/"$1"
+sed -i '' "/^$1$/d" "$(docm-get-context-dir)"/documentlist
+rm "$(docm-get-context-dir)"/docs/"$1"

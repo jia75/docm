@@ -10,7 +10,7 @@ fi
 
 if [ "$#" = "2" ]
 then
-    sed -i '' "/^$2=/d" .docm/docs/"$1"
+    sed -i '' "/^$2=/d" "$(docm-get-context-dir)"/docs/"$1"
 else
-    sed -i '' "/^$2=$3$/d" .docm/docs/"$1"
+    sed -i '' "/^$2=$3$/d" "$(docm-get-context-dir)"/docs/"$1"
 fi

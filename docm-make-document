@@ -14,10 +14,10 @@ then
     exit 1
 fi
 
-touch .docm/docs/"$1"
-echo "title=$1" >> .docm/docs/"$1"
+touch "$(docm-get-context-dir)"/docs/"$1"
+echo "title=$1" >> "$(docm-get-context-dir)"/docs/"$1"
 
-echo "$1" >> .docm/documentlist
+echo "$1" >> "$(docm-get-context-dir)"/documentlist
 
-tmpfile=$(mktemp .docm/documentlist.XXXXXX) || exit 1
-sort .docm/documentlist > "$tmpfile" && mv "$tmpfile" .docm/documentlist
+tmpfile=$(mktemp "$(docm-get-context-dir)"/documentlist.XXXXXX) || exit 1
+sort "$(docm-get-context-dir)"/documentlist > "$tmpfile" && mv "$tmpfile" "$(docm-get-context-dir)"/documentlist
