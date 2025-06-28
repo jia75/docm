@@ -42,10 +42,13 @@ if [ "$ioption" == "1" ]
 then
     for FILE in *
     do      
-        docm-make-document "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")" \
+        if ! docm-document-exists "$FILE"
+        then
+            docm-make-document "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")" \
 2> /dev/null
-        docm-set-attribute "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")" \
+            docm-set-attribute "$(echo $FILE | sed "s/\.[^\.]\{1,\}$//g")" \
 file "$FILE"
+        fi
     done
     exit 0 
 fi
