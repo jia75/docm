@@ -9,11 +9,12 @@ then
 fi
 
 if ! docm-document-exists "$1"
-then
     echo "docm: fatal: document \"$1\" does not exist" >&2
     exit 1
 fi
 
 echo "$1"
+echo "Files:"
+docm-get-attribute "$1" file
 grep "[^=]\+-to=.\+" "$(docm-get-context-dir)"/docs/"$1" | sed "s/^/--/g" | sed "s/-to=/-> /g"
 grep "[^=]\+-from=.\+" "$(docm-get-context-dir)"/docs/"$1" | sed "s/^/<-/g" | sed "s/-from=/-- /g"
