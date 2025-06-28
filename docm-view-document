@@ -9,6 +9,7 @@ then
 fi
 
 if ! docm-document-exists "$1"
+then
     echo "docm: fatal: document \"$1\" does not exist" >&2
     exit 1
 fi
