@@ -1,5 +1,17 @@
 #!/bin/sh
 
+if ! docm-is-in-context
+then
+    echo "docm: fatal: not in a context" >&2
+    exit 1
+fi
+
+if ! [ -d "$dir/.docm" ]
+then
+    echo "docm: fatal: in a subdirectory, execute this command at $(dirname "$(docm-get-context-dir)")"
+    exit 1
+fi
+
 echo "You are about to permanently remove all data regarding this Docm context.
 Are you sure? (Y/n)"
 
