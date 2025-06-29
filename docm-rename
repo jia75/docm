@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# docm-rename <oldname> <newname>
+
+# updates links in both directions
+
+if [ "$#" -lt "2" ]
+then
+    echo "docm: fatal: not enough arguments (2 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if ! docm-document-exists "$1"
+then
+    echo "docm: fatal: the document '$1' doesn't exist"
+    exit 1
+fi
+
+if docm-document-exists "$2"
+then
+    echo "docm: fatal: the document '$2' already exists"
+    exit 1
+fi
+
+docm-make-document "$2"
+
+docm-cat-document "$1" >> "$(docm-get-context-dir)"/docs/"$2"
+
+docm-rm-attribute "$2" title
+
+docm-set-attribute "$2" title "$2"
+
+docm-cat-document "$2" | while read line
+do
+    if [ "$(echo "$line" | sed "s/[^=]*-to=[^=]*/x/g")" == "x" ]
+    then
+        docm-rm-attribute "$(echo "$line" | sed "s/[^=]*-to=//g")" "$(echo "$line" | sed "s/-to=[^=]*/-from/g")" "$1"
+        docm-set-attribute "$(echo "$line" | sed "s/[^=]*-to=//g")" "$(echo "$line" | sed "s/-to=[^=]*/-from/g")" "$2"
+    fi
+done
+
+docm-rm-document "$1"

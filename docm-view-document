@@ -15,7 +15,11 @@ then
 fi
 
 echo "$1"
-echo "Files:"
-docm-get-attribute "$1" file
+if ! [ "$(docm-get-attribute "$1" file)" == "" ]
+then
+    echo "Files:"
+    docm-get-attribute "$1" file
+fi
+
 grep "[^=]\+-to=.\+" "$(docm-get-context-dir)"/docs/"$1" | sed "s/^/--/g" | sed "s/-to=/-> /g"
 grep "[^=]\+-from=.\+" "$(docm-get-context-dir)"/docs/"$1" | sed "s/^/<-/g" | sed "s/-from=/-- /g"

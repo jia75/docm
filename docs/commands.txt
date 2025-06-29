@@ -1,0 +1,29 @@
+Here is a list of all Docm commands and a brief description.
+
+Basic commands:
+    make-context    Make a new Docm context
+    help            Access the help pages
+    list            See a list of all documents
+    search          Search all documents using a specialized language
+    setup           Access a brief wizard that initializes Docm
+
+Using documents:
+    doc             Create and delete documents
+    make-document   Create a document with a specified name
+    cat-document    View the raw contents of a document file
+    rm-document     Erase a document
+    view-document   View a readable version of a document's contents and links
+    set-attribute   Set a specific argument
+    rename          Rename a document
+
+Links:
+    make-link       Create a link of a specified type between two documents
+    tag             Tag a documents with a tag by creating the necessary links
+
+Plumbing:
+    document-exists Output whether or not a document exists
+    get-attribute   Output all values of a specific attribute for some document
+    get-context-dir Output the directory where the current context is contained
+    is-in-context   Check if currently in a context
+    rm-attribute    Remove an attribute based on name and value
+    rm-context      Deletes the current context
