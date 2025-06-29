@@ -1,0 +1,28 @@
+#!/bin/sh
+
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if ! docm-document-exists "$1"
+then
+    echo "docm: fatal: document does not exist" >&2
+    exit 1
+fi
+
+docm-cat-document "$1" | while read line
+do
+    if ( ! [ "$line" == "x" ] ) && [ "$(echo "$line" | sed "s/[^=]*-to=[^=]*/x/g")" == "x" ]
+    then
+        docm-rm-attribute "$(echo "$line" | sed "s/[^=]*-to=//g")" "$(echo "$line" | sed "s/-to=[^=]*/-from/g")" "$1"
+    fi
+    if ( ! [ "$line" == "x" ] ) && [ "$(echo "$line" | sed "s/[^=]*-from=[^=]*/x/g")" == "x" ]
+    then
+        docm-rm-attribute "$(echo "$line" | sed "s/[^=]*-from=//g")" "$(echo "$line" | sed "s/-from=[^=]*/-to/g")" "$1"
+    fi
+done
+
+sed -i '' "/^$1$/d" "$(docm-get-context-dir)"/documentlist
+rm "$(docm-get-context-dir)"/docs/"$1"

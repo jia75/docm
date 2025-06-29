@@ -1,0 +1,20 @@
+A context is the base element of Docm. Everything that Docm does happens within
+some context. It is a required base level for documents to be created and thus
+for links to be created.
+
+This means that the first step to actually getting use out of Docm is to create
+a context. Contexts are restricted to directories (folders) and all their
+contained directiories. Essentially, if a context is created (see the commands
+section on how to do that) in the directory '/x/y/z/', then files that are
+contained within that directory can be added as documents. Note that a file in
+'/x/y/z/w/' can also be created as a document, because 'w/' is a subdirectory
+of 'z/'.
+
+Commands:
+    make-context   Creates a context in the current directory
+    rm-context     Removes the current context
+
+Notes:
+    If somehow (eg. by manipulating the '.docm/' directory) a context is
+    created in a directory that is already covered that some other context,
+    then priority is given to the subdirectory's context.

@@ -1,0 +1,10 @@
+#!/bin/sh
+if docm-is-in-context
+then
+    echo "docm: fatal: context already exists at $(docm-get-context-dir)" >&2
+    exit 1
+fi
+
+mkdir .docm
+mkdir .docm/docs
+touch .docm/documentlist

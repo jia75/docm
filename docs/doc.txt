@@ -1,0 +1,15 @@
+'docm doc' is the monolithic command for dealing with most document-related
+tasks. Executing it without any options simply creates a document with the
+specified title.
+
+Options
+    -r  Remove the specified document
+    -i  Add all files in the current directory to the context (not recursive)
+    -f  Accept one argument and set it as a file of the document
+
+Notes
+    When multiple options are used together, the following precedence rules are
+    followed: the '-f' option is always executed first, and no other options
+    are executed; the '-i option is executed if no '-f' option exists, and no
+    others are executed; the '-r' option is executed last in priority (because
+    it is the most destructive).

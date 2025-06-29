@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ "$#" -lt "2" ]
+then
+    echo "docm: fatal: not enough arguments (2 needed, $# supplied)" >&2
+    exit 1
+fi
+
+cat "$(docm-get-context-dir)"/docs/"$1" | grep "$2=.\+" | sed "s/$2=//g"

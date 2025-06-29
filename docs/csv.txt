@@ -1,0 +1,15 @@
+Docm provides some basic utilities to import and output documents and links.
+These utilities accept and produce files in a format that resembles the CSV
+format. 
+
+Note that when a document is associated with more than one file, only one of
+the files will be included.
+
+The commands that one uses in order to create and read CSV representations of a
+graph are the following:
+
+    make-csv    Outputs the contents of the CSV file that fully represents the
+                    context to stdout
+
+    load-csv    Accepts a file name as an argument and reads that file and
+                    reconstructs the context that the CSV file describes

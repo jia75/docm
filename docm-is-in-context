@@ -1,0 +1,12 @@
+#!/bin/sh
+dir="$PWD"
+while [ "$dir" != "/" ]
+do
+    if [ -d "$dir/.docm" ]
+    then
+        exit 0
+        break
+    fi
+    dir=$(dirname "$dir")
+done
+exit 1

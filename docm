@@ -1,0 +1,47 @@
+#!/bin/sh
+cmd="$1"
+dir="$(dirname $0)"
+
+# Check if argument is given
+
+if [ "$cmd" = "" ]
+then
+    echo "docm: fatal: no arguments given" >&2
+    echo "For support with Docm, try 'docm help'" >&2
+    exit 1
+fi
+
+while getopts ":h" option; do
+    case "$option" in
+        (h) docm-help
+            exit 0;;
+        (?) echo "docm: fatal: invalid option" >&2
+            echo "use 'docm help' for an overview of Docm" >&2;;
+    esac
+done
+
+shift
+
+if [ -e "$dir"/docm-$cmd ]
+then
+
+    # Check if valid context (or creating one)
+
+    if [ "$cmd" = "make-context" ] || [ "$cmd" = "help" ] || [ "$cmd" = "setup" ]
+    then
+        exec "$dir"/docm-"$cmd" "$@"
+    else
+        if docm-is-in-context
+        then
+            exec ""$dir"/docm-$cmd" "$@"
+        else
+            echo "docm: fatal: docm context not found (create with docm make-context)" >&2
+            exit 1
+        fi
+    fi
+
+else
+    echo "docm: fatal: function '$cmd' not found" >&2
+    exit 1
+fi
+

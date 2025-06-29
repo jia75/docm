@@ -1,0 +1,6 @@
+Links are the most important factor that transforms Docm contexts from regular
+collections of documents to annotated graphs.
+
+To create a link, there is a simple command:
+
+    docm make-link <from> <type> <to>

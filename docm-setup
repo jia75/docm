@@ -1,0 +1,43 @@
+#!/bin/sh
+
+echo "Welcome to the Docm setup guide. This is a guided tool to quickly setup a Docm context. Do you want to use it? (y/n)"
+
+read
+
+if ! ( [ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ] )
+then
+    echo "Aborted the guide"
+    exit 0
+fi
+
+if docm-is-in-context
+then
+    echo "There seems that a docm-context already exists and is active in the current directory (wmich doesn't necessarily mean it is in the current directory)."
+    exit 1
+fi
+
+echo "The first step is to create a context to store the Docm files and links. Do you want this context to be created in this directory? (y/n)"
+
+read
+
+if ! ( [ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ] )
+then
+    echo "In that case, go to your target directory and execute this guide from there."
+    exit 0
+fi
+
+docm-make-context
+
+echo "The context has been created. Do you now want to continue by adding all the files directly contained in this directory as documents (you can remove them later)?"
+
+read
+
+if ! ( [ "$REPLY" == "y" ] || [ "$REPLY" == "Y" ] )
+then
+    echo "In that case, your setup has been completed."
+    exit 0
+fi
+
+docm doc -i
+
+echo "Your setup has been completed."

@@ -1,0 +1,27 @@
+Docm is a graph-based organization and linking layer. You can use it to create
+systems where files (documents) are connected with eachother through named
+links. For more help pages, you can access the index via 'docm help -l'.
+
+Here are the various commands that Docm offers:
+
+Basic commands:
+    make-context    Make a new Docm context
+    help            Access the help pages
+    list            See a list of all documents
+    search          Searches all documents using a specialized language
+    setup           Access a brief wizard that initializes Docm
+
+Using documents:
+    doc             Create and delete documents
+    make-document   Create a document with a specified name
+    cat-document    View the raw contents of a document file
+    rm-document     Erase a document
+    view-document   View a readable version of a document's contents and links
+    set-attribute   Set a specific argument
+    rename          Rename a document
+
+Links:
+    make-link       Creates a link of a specified type between two documents
+    tag             Tags a documents with a tag by creating the necessary links
+
+More more specialized commands are available at 'help commands'

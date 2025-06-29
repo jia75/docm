@@ -1,0 +1,17 @@
+#!/bin/sh
+
+cat "$(docm-get-context-dir)"/documentlist | while read
+do
+    echo "d,$REPLY,$(docm-get-attribute "$REPLY" file | head -n 1)"
+done
+
+cat "$(docm-get-context-dir)"/documentlist | while read doc
+do
+    cat "$(docm-get-context-dir)"/docs/"$doc" | while read line
+    do
+        if ( ! [ "$line" == "x" ] ) && [ "$(echo "$line" | sed "s/[^=]*-to=[^=]*/x/g")" == "x" ]
+        then
+            echo "l,$doc,$(echo "$line" | sed "s/-to=[^=]*//g"),$(echo "$line" | sed "s/[^=]*-to=//g")"
+        fi
+    done
+done

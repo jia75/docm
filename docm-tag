@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# tag <document> <tag-name>
+
+if [ "$#" -lt "2" ]
+then
+    echo "docm: fatal: not enough arguments (2 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if ! docm-document-exists "$1"
+then
+    echo "docm: fatal: document \"$1\" doesn't exist" >&2
+    exit 1
+fi
+
+if ! docm-document-exists "$2"
+then
+    docm-make-document "$2"
+fi
+
+docm-make-link "$2" tags "$1"

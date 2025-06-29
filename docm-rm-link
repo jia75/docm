@@ -1,0 +1,26 @@
+#!/bin/sh
+
+# Usage: docm-make-link <from> <type> <to>
+
+if [ "$#" -lt "3" ]
+then
+    echo "docm: fatal: not enough arguments (3 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if ! docm-document-exists "$1"
+then
+    echo "docm: fatal: document '$1' does not exist"
+    exit 1
+fi
+
+if ! docm-document-exists "$3"
+then
+    echo "docm: fatal: document '$3' does not exist"
+    exit 1
+fi
+
+# Assuming that the link exists on both sides (ie it's not broken)
+
+docm-rm-attribute "$1" "$2-to" $3
+docm-rm-attribute "$3" "$2-from" $1

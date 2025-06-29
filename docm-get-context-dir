@@ -1,0 +1,21 @@
+#!/bin/sh
+
+# docm-get-context-dir
+# Prints the directory of the context (including the '.docm')
+
+if ! docm-is-in-context
+then
+    echo "docm: fatal: not in a context" >&2
+fi
+
+dir="$PWD"
+while [ "$dir" != "/" ]
+do
+    if [ -d "$dir/.docm" ]
+    then
+        echo "$dir/.docm"
+        exit 0
+    fi
+    dir=$(dirname "$dir")
+done
+exit 1
