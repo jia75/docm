@@ -1,6 +1,6 @@
 # Docm
 
-![Static Badge](https://img.shields.io/badge/License-GPL_2-red)
+![Static Badge](https://img.shields.io/badge/License-GPL_2-red) ![Static Badge](https://img.shields.io/badge/No-AI-green) ![Static Badge](https://img.shields.io/badge/Version-1.0.0-yellow)
 
 Docm is a graph-based organization and linking layer. You can use it to create systems where files (documents) are connected with eachother through named links. It is made available under the terms of the GNU Public License (available in the file called `LICENSE`).
 
