@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# docm-load-csv <filename>
+
+if [ "$#" -lt "1" ]
+then
+    echo "docm: fatal: not enough arguments (1 needed, $# supplied)" >&2
+    exit 1
+fi
+
+if ! [ -f "$1" ]
+then
+    echo "docm: fatal: specified CSV file does not exist" >&2
+    exit 1
+fi
+
+cat "$1" | while read lineput
+do
+    line="$lineput"
+    recordtype="$(echo "$line" | sed "s/^d.*/d/g" | sed "s/^l.*/l/g")"
+    if [ "$recordtype" == "d" ]
+    then
+        line="$(echo "$line" | sed "s/^[^,]*,//g")"
+        docname="$(echo "$line" | sed "s/,.*//g")"
+        if ! docm-document-exists "$docname"
+        then
+            docm-make-document "$docname"   
+            line="$(echo "$line" | sed "s/^[^,]*,//g")"
+            docfile="$(echo "$line" | sed "s/,.*//g")"
+            if ! [ "$docfile" == "" ]
+            then
+                docm-set-attribute "$docname" file "$docfile"
+            fi
+        fi
+    fi
+    if [ "$recordtype" == "l" ]
+    then
+        line="$(echo "$line" | sed "s/^[^,]*,//g")"
+        sourcedoc="$(echo "$line" | sed "s/,.*//g")"
+        line="$(echo "$line" | sed "s/^[^,]*,//g")"
+        linktype="$(echo "$line" | sed "s/,.*//g")"
+        line="$(echo "$line" | sed "s/^[^,]*,//g")"
+        targetdoc="$(echo "$line" | sed "s/,.*//g")"
+
+        docm-make-link "$sourcedoc" "$linktype" "$targetdoc"
+    fi
+done

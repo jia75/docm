@@ -57,6 +57,7 @@ do
                 tmp2=$(mktemp)
                 echo "$choices" > "$tmp1"
                 echo "$newch" > "$tmp2"
+                # Find the union between the two temps
                 choices="$(comm -12 "$tmp1" "$tmp2")"
                 rm -f "$tmp1"
                 rm -f "$tmp2";;

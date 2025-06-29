@@ -1,0 +1,6 @@
+Docm provides some basic utilities to import and output documents and links.
+These utilities accept and produce files in a format that resembles the CSV
+format. 
+
+Note that when a document is associated with more than one file, only one of
+the files will be included.

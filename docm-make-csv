@@ -1,0 +1,6 @@
+#!/bin/sh
+
+cat "$(docm-get-context-dir)"/documentlist | while read
+do
+    echo "d,$REPLY,$(docm-get-attribute "$REPLY" file | head -n 1)"
+done

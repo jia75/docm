@@ -27,7 +27,7 @@ then
 
     # Check if valid context (or creating one)
 
-    if [ "$cmd" = "make-context" ] || [ "$cmd" = "help" ]
+    if [ "$cmd" = "make-context" ] || [ "$cmd" = "help" ] || [ "$cmd" = "setup" ]
     then
         exec "$dir"/docm-"$cmd" "$@"
     else
