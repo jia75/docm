@@ -6,7 +6,7 @@ then
     exit 1
 fi
 
-if ! [ -d "$dir/.docm" ]
+if ! [ -d "$PWD/.docm" ]
 then
     echo "docm: fatal: in a subdirectory, execute this command at $(dirname "$(docm-get-context-dir)")" >&2
     exit 1
